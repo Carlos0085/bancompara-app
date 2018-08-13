@@ -1,4 +1,4 @@
-from djangoal.settings import *
+from bancompara.settings import *
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
