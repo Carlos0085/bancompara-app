@@ -1,1 +1,1 @@
-worker:  bundle exec rake jobs:work
+web: gunicorn bancompara-app bancompara.wsgi --log-file -
