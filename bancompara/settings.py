@@ -14,7 +14,7 @@ import os
 
 def get_env_variable(var_name):
 	try:
-		return os.environ(var_name)
+		return os.environ[var_name]
 	except KeyError:
 		error_msg = "Set the {} env variable". format(var_name)
 		if DEBUG:
