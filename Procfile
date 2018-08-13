@@ -1,1 +1,1 @@
-web: gunicorn bancompara-app bancompara.wsgi --log-file -
+web: gunicorn --pythonpath bancompara bancompara.wsgi --log-file -
