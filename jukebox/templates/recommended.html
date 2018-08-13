@@ -82,7 +82,8 @@
 			
 			$( "ul li a" ).trigger( "click" );
 			$.ajax({
-				url: "http://127.0.0.1:8000/jukebox/genre/"+workingId+"/", 
+				//url: "http://127.0.0.1:8000/jukebox/genre/"+workingId+"/", //for local
+				url: "http://bancompara.herokuapp.com/jukebox/genre/"+workingId+"/", //for online
 				success: function(result){
 					for(var k in result) {
 						$('#loadingArtist').hide();
@@ -95,7 +96,7 @@
 						//alert(workingId);
 						$( "ul li a" ).trigger( "click" );
 						$.ajax({
-							url: "http://127.0.0.1:8000/jukebox/artist/"+workingId+"/", 
+							url: "http://bancompara.herokuapp.com/jukebox/artist/"+workingId+"/", 
 							success: function(result){
 								for(var k in result) {
 									$('#loadingSong').hide();
