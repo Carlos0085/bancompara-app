@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+
+{% block title %}{% endblock %}
+
+{% block content %}	
+	<div class="container">
+		<section class="text-right">
+			<p style="margin-top: 40px;">
+				<a href="{% url 'jukebox:songs_list' %}" class="btn btn-lg btn-secondary  my-2"><span class="glyphicon glyphicon-th-list"></span> Lista</a>
+				<a href="{% url 'jukebox:songs_collage' %}" class="btn btn-lg btn-secondary my-2"><span class="glyphicon glyphicon-th-large"></span> Cuadricula</a>
+			</p>
+		</section>
+		
+	</div>
+	
+	<table id="songsTable" class="table table-hover">
+	  <thead class="thead-dark">
+		<tr>
+		  <th scope="col">Title</th>
+		  <th scope="col">Artist</th>
+		  <th scope="col">Genre</th>
+		</tr>
+	  </thead>
+	  <tbody>
+		{% for song in songs %}
+		<tr data-videoId={{song.video_id}}>
+		  <td>{{ song.song_name }}</td>
+		  <td>{{song.artist.band_name}}</td>
+		  <td>{{song.artist.genre.name}}</td>
+		</tr>
+		{% endfor %}
+	  </tbody>
+	</table>
+	<div id = 'video'> 
+		<iframe style="display:none" src="http://player.vimeo.com/video/13859064?api=1&autoplay=1&loop=1&autopause=0" width="200" height="115" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+	</div>
+{% endblock %}
+
+
+{% block script%}
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script>
+	$(document).ready(function(){
+		$("tbody tr").click(function(){
+			var videoId = $(this).attr('data-videoid');
+			$("iframe").show();
+			$("iframe").attr("src","http://player.vimeo.com/video/"+ videoId + "?api=1&autoplay=1&loop=1&autopause=0");
+		});
+	});
+	
+	$(document).ready(function(){
+		$('#songsTable').DataTable({
+			"paging":   false,
+			"info":     false,
+		});
+	});
+  </script>
+  
+{% endblock %}
+

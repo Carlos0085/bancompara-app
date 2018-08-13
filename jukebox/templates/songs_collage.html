@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<!--<nav>
+	<a href="{% url 'jukebox:songs_list' %}" class="btn  btn-lg"><span class="glyphicon glyphicon-th-list"></span> Lista</a>
+	<a href="{% url 'jukebox:songs_collage' %}" class="btn  btn-lg"><span class="glyphicon glyphicon-th-large"></span> Cuadricula</a>
+</nav>-->
+<div class="container">
+	<section class="text-right">
+		<p style="margin-top: 40px;">
+			<a href="{% url 'jukebox:songs_list' %}" class="btn btn-lg btn-secondary  my-2"><span class="glyphicon glyphicon-th-list"></span> Lista</a>
+			<a href="{% url 'jukebox:songs_collage' %}" class="btn btn-lg btn-secondary my-2"><span class="glyphicon glyphicon-th-large"></span> Cuadricula</a>
+		</p>
+	</section>
+	
+</div>
+
+
+<div class="cards">
+    {% for song in songs %}
+    <div data-videoId={{ song.video_id }} class="card">
+        <header><a href=""><strong>{{ song.song_name }}</strong> - {{song.artist.band_name}}</a></header>
+        <div class="card-copy">
+			<div class="text-center">
+				<img height="100" width="100" src= {{song.artist.artist_cover_image}} alt='artist_image'>
+			</div>	
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div id = 'video'> 
+	<iframe style="display:none" src="http://player.vimeo.com/video/13859064?api=1&autoplay=1&loop=1&autopause=0" width="200" height="115" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+</div>
+{% endblock %}
+
+{% block script %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script>
+	$(document).ready(function(){
+		$("div.card").click(function(){
+			var videoId = $(this).attr('data-videoid');
+			$("iframe").show();
+			$("iframe").attr("src","http://player.vimeo.com/video/"+ videoId + "?api=1&autoplay=1&loop=1&autopause=0");
+		});
+	});
+	
+	$(document).ready(function(){
+		$('#songsTable').DataTable({
+			"paging":   false,
+			"info":     false,
+		});
+	});
+  </script>
+
+
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+
+
+{% block content %}	
+	<div class="container">
+		<div style= "margin-top: 45px;margin-bottom: 0px;" id="myCarousel1" class="carousel slide" data-ride="carousel">
+			<ol class="carousel-indicators">
+			  <li data-target="#myCarousel1" data-slide-to="0" class="active"></li>
+			  <li data-target="#myCarousel1" data-slide-to="1"></li>
+			  <li data-target="#myCarousel1" data-slide-to="2"></li>
+			</ol>
+			<div class="carousel-inner">
+			  <div class="carousel-item item active">
+				<img style="width: 1000px; class="first-slide" src="https://wallpapercave.com/wp/0l0kzYB.jpg" alt="First slide">
+				<div class="container">
+				  <div class="carousel-caption text-left">
+					<h1>GrooveJam</h1>
+					<p>Es una aplicacion en donde se recopilan algunos de mis artistas y generos favoritos.</p>
+					<p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+				  </div>
+				</div>
+			  </div>
+			  <div class="carousel-item item">
+				<img class="second-slide" src="https://www.planwallpaper.com/static/images/963840d34c51efe6fbe57749fb434646.jpg" alt="Second slide">
+				<div class="container">
+				  <div class="carousel-caption">
+					<h1>Vimeo</h1>
+					<p>Con el fin de reproducir las canciones se utilizan los videos de Vimeo ya que youtube tiene mas restricciones.</p>
+					<p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+				  </div>
+				</div>
+			  </div>
+			  <div class="carousel-item item">
+				<img class="third-slide" src="https://www.wallpaperup.com/uploads/wallpapers/2014/09/26/456768/f07635fc24d8e33b3bddac1b15e6ea51-700.jpg" alt="Third slide">
+				<div class="container">
+				  <div class="carousel-caption text-right">
+					<h1>Tecnologias.</h1>
+					<p>Esta aplicacion fue elaborada con el framework de Django por el lado del backend, mientras el front end solo lleva jquery y bootstrap para hacer llamadas Ajax y personalizar un poco el sitio.</p>
+					<p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			<a class="carousel-control-prev" href="#myCarousel1" role="button" data-slide="prev">
+			  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			  <span class="sr-only">Previous</span>
+			</a>
+			<a class="carousel-control-next" href="#myCarousel1" role="button" data-slide="next">
+			  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			  <span class="sr-only">Next</span>
+			</a>
+		</div>
+			
+        
+			<section class="jumbotron text-center">
+				<div class="container">
+					<h1 class="jumbotron-heading">Bienvenido!</h1>
+					<p class="lead text-muted">Esta aplicacion da a conocer un poco de mis gustos musicales dado que la musica es uno de mis pasatiempos favoritos.</p>
+					<p>
+						<a href="{% url 'jukebox:songs_list' %}" class="btn btn-primary my-2">Todas las canciones</a>
+						<a href="{% url 'jukebox:recommended_songs' %}" class="btn btn-secondary my-2">Top 3 por artista</a>
+					</p>
+				</div>
+			</section>
+
+        </p>		
+
+        </div>
+ {% endblock %}
+{% block script %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+ {% endblock  %}

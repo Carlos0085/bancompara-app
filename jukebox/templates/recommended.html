@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+
+{% block title %}{% endblock %}
+
+{% block content %}	
+	
+	<div class="container">
+		<div class= "text-right">
+			<button style="padding: .7rem 1.2rem; font-size: 1.85rem;margin-top: 60px;" class="btn btn-lg btn-success"> Regresar</button></div>
+		<div id="example-embed">
+			<h3>Genero</h3>
+			<section>
+			<table id="genreList" class="table table-striped table-hover">
+				<tbody>
+					{% for genre in genres %}
+					<tr data-genreId={{genre.pk}} >
+					  <td>{{ genre.name}}</td>
+					</tr>
+					{% endfor %}
+				  </tbody>				
+			</table>
+				
+			</section>
+			<h3>Artista</h3>
+			<section>
+				<div id="loadingArtist"><p>Cargando...</p></div>
+				<table id="artistList" class="table table-striped table-hover">
+					<tbody>
+						<tr></tr>
+					</tbody>				
+				</table>
+				
+			</section>
+			<h3>Cancion</h3>
+			<section>
+				<div id="loadingSong"><p>Cargando...</p></div>
+				<table id="songList" class="table table-striped table-hover">
+					<tbody>
+						<tr></tr>
+					</tbody>				
+				</table>
+			</section>
+		</div>
+	</div>
+
+	<div id = 'video'> 
+		<iframe style="display:none" src="http://player.vimeo.com/video/13859064?api=1&autoplay=1&loop=1&autopause=0" width="200" height="115" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+	</div>
+{% endblock %}
+
+
+{% block script%}
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="{% static 'js/jquery.steps.min.js' %}"></script>
+
+  <script>
+	var workingId;
+	$(document).ready(function(){
+		/*$("tbody tr").click(function(){
+			var videoId = $(this).attr('data-videoid');
+			$("iframe").show();
+			$("iframe").attr("src","http://player.vimeo.com/video/"+ videoId + "?api=1&autoplay=1&loop=1&autopause=0");
+		});*/
+	});
+	$(document).ready(function(){
+		$("#example-embed").steps({
+			headerTag: "h3",
+			bodyTag: "section",
+			transitionEffect: "slideLeft",
+			//enableKeyNavigation: "true",
+			forceMoveForward: "true",
+		});
+	});
+	$(document).ready(function() {
+		$( "div.actions ul li a" ).hide();
+		$("#genreList tbody tr").click(function(){	
+			workingId = $(this).attr('data-genreId');
+			//alert(workingId);
+			
+			$( "ul li a" ).trigger( "click" );
+			$.ajax({
+				url: "http://127.0.0.1:8000/jukebox/genre/"+workingId+"/", 
+				success: function(result){
+					for(var k in result) {
+						$('#loadingArtist').hide();
+						//console.log(k, result[k].pk);
+						$('#artistList tr:last').after('<tr data-artistId= "'+result[k].pk+'"><td>'+result[k].fields.band_name+'</td></tr>');
+					}
+					
+					$("#artistList tbody tr").click(function(){	
+						workingId = $(this).attr('data-artistId');
+						//alert(workingId);
+						$( "ul li a" ).trigger( "click" );
+						$.ajax({
+							url: "http://127.0.0.1:8000/jukebox/artist/"+workingId+"/", 
+							success: function(result){
+								for(var k in result) {
+									$('#loadingSong').hide();
+									console.log(k, result[k]);
+									$('#songList tr:last').after('<tr data-videoid= "'+result[k].fields.video_id+'"><td>'+result[k].fields.song_name+'</td></tr>');
+								}
+								
+								$("#songList tbody tr").click(function(){
+									//alert("pinche video sal");
+									var videoId = $(this).attr('data-videoid');
+									$("iframe").show();
+									$("iframe").attr("src","http://player.vimeo.com/video/"+ videoId + "?api=1&autoplay=1&loop=1&autopause=0");
+								});
+								
+							}
+						});
+					});
+				}
+			});
+		});
+		
+	});
+	$(document).ready(function() {
+
+	});
+  </script>
+  
+{% endblock script %}
+
